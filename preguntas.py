@@ -11,7 +11,7 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
-
+Import csv
 
 def pregunta_01():
     """
@@ -21,6 +21,7 @@ def pregunta_01():
     214
 
     """
+
     Res1 = 0
     with open('data.csv') as datos:
         datos = csv.reader(datos, delimiter='	')
