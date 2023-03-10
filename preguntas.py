@@ -21,8 +21,12 @@ def pregunta_01():
     214
 
     """
-    return
-
+    Res1 = 0
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for fila in datos:
+            Res1 += int(fila[1])
+    return Res1
 
 def pregunta_02():
     """
@@ -39,8 +43,18 @@ def pregunta_02():
     ]
 
     """
-    return
+    letras = []
+    Res2 = []
 
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for i in datos:
+            letras.append(i[0])         
+    for j in set(letras):
+        Res2.append((j, letras.count(j)))
+    Res2.sort()
+
+    return Res2
 
 def pregunta_03():
     """
@@ -57,8 +71,21 @@ def pregunta_03():
     ]
 
     """
+    letra=[]
+    suma = []
+    Res3=[]
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for i in datos:
+            if(not i[0] in letra):
+                letra.append(i[0])
+                suma.append(int(i[1]))
+            else:
+                suma[letra.index(i[0])]+=int(i[1])
+    for J in letra:
+        R3.append((J,conteo[letra.index(J)]))
+    Res3.sort(reverse=False)
     return
-
 
 def pregunta_04():
     """
@@ -82,9 +109,18 @@ def pregunta_04():
     ]
 
     """
-    return
-
-
+    
+    Meses = []
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for i in datos:
+            Mes = i[2].split("-")[1]
+            Meses.append(mes)
+    Res4 = []
+    for Mes in sorted(set(Meses)):
+        Res4.append((Mes, Meses.count(Mes)))
+    return Res4
+  
 def pregunta_05():
     """
     Retorne una lista de tuplas con el valor maximo y minimo de la columna 2 por cada
@@ -100,9 +136,22 @@ def pregunta_05():
     ]
 
     """
-    return
+    Letra = []
+    Conteo = []
 
-
+    with open('data.csv') as csv_file:
+        datos = csv.reader(csv_file, delimiter='	')
+        for i in datos:
+            if not i[0] in letras:
+                Letra.append(i[0])
+                Conteo.append([int(i[1])])
+            else:
+                Conteo[Letra.index(i[0])].append(int(i[1]))
+    Res5 = []
+    for l in sorted(set(Letra)):
+        Res5.append((l, max(Conteo[Letra.index(l)]), min(Conteo[Letras.index(l)])))  
+    return Res5
+    
 def pregunta_06():
     """
     La columna 5 codifica un diccionario donde cada cadena de tres letras corresponde a
@@ -125,9 +174,28 @@ def pregunta_06():
     ]
 
     """
-    return
+    cadenas = []
+    valores = []
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for i in datos:
+            dic = i[4].split(',')
 
+            for j in dic: 
+                cadena = j.split(':')[0]
+                valor = j.split(':')[1]
 
+                if cadena not in cadenas:
+                    cadenas.append(cadena)
+                    valores.append([int(valor)])
+                else:
+                    valores[cadenas.index(cadena)].append(int(valor))
+    R6 = []
+    for cadena in sorted(cadenas):
+        R6.append((cadena, min(valores[cadenas.index(cadena)]), max(valores[cadenas.index(cadena)])))
+
+    return R6
+    
 def pregunta_07():
     """
     Retorne una lista de tuplas que asocien las columnas 0 y 1. Cada tupla contiene un
@@ -149,9 +217,21 @@ def pregunta_07():
     ]
 
     """
-    return
-
-
+    numeros = []
+    letras = []
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for fila in datos:
+            if int(fila[1]) not in numeros:
+                numeros.append(int(fila[1]))
+                letras.append([fila[0]])
+            else:
+                letras[numeros.index(int(fila[1]))].append(fila[0])
+    R7 = []
+    for numero in sorted(numeros):
+        R7.append((numero, letras[numeros.index(numero)]))
+    return R7
+   
 def pregunta_08():
     """
     Genere una lista de tuplas, donde el primer elemento de cada tupla contiene  el valor
@@ -174,9 +254,23 @@ def pregunta_08():
     ]
 
     """
-    return
-
-
+    numeros = []
+    letras = []
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for fila in datos:
+            if int(fila[1]) not in numeros:
+                numeros.append(int(fila[1]))
+                letras.append({fila[0]})
+            else:
+                letras[numeros.index(int(fila[1]))].add(fila[0])
+    R8 = []
+    for numero in sorted(numeros):
+        R8.append((numero, list(sorted(letras[numeros.index(numero)]))))
+    R8.sort()
+    
+    return R8
+    
 def pregunta_09():
     """
     Retorne un diccionario que contenga la cantidad de registros en que aparece cada
@@ -197,9 +291,24 @@ def pregunta_09():
     }
 
     """
-    return
+    dic = {}
 
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for fila in datos:
+            diccionario = fila[4].split(',')
+            for i in diccionario: 
+                cadena = i.split(':')[0]
 
+                if cadena not in dic.keys():
+                    dic[cadena] = 1
+                else:
+                    dic[cadena] += 1
+
+    R9 = dict(sorted(dic.items()))
+    
+    return R9
+    
 def pregunta_10():
     """
     Retorne una lista de tuplas contengan por cada tupla, la letra de la columna 1 y la
@@ -218,8 +327,16 @@ def pregunta_10():
 
 
     """
-    return
+     R10 = []
 
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for fila in datos:
+            col4 = len(fila[3].split(','))
+            col5 = len(fila[4].split(','))
+            R10.append((fila[0], col4, col5))
+        
+    return R10
 
 def pregunta_11():
     """
@@ -239,8 +356,19 @@ def pregunta_11():
 
 
     """
-    return
+    letras = {}
 
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for fila in datos:
+            for letra in fila[3].split(','):
+                if not letra in letras.keys():
+                    letras[letra] = int(fila[1])
+                else:
+                    letras[letra] += int(fila[1])
+
+    R11 = dict(sorted(letras.items()))
+    return R11
 
 def pregunta_12():
     """
@@ -257,4 +385,19 @@ def pregunta_12():
     }
 
     """
-    return
+    letras = {}
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for fila in datos:
+            letra = fila[0]
+                
+            for elemento in fila[4].split(','):
+                numero = int(elemento.split(':')[1])
+
+                if not letra in letras.keys():
+                    letras[letra] = numero
+                else:
+                    letras[letra] += numero
+
+    R12 = dict(sorted(letras.items()))
+    return R12
