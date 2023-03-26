@@ -11,7 +11,8 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
-Import csv
+
+import csv
 
 def pregunta_01():
     """
@@ -21,13 +22,12 @@ def pregunta_01():
     214
 
     """
-
-    Res1 = 0
+    R1 = 0
     with open('data.csv') as datos:
         datos = csv.reader(datos, delimiter='	')
         for fila in datos:
-            Res1 += int(fila[1])
-    return Res1
+            R1 += int(fila[1])
+    return R1
 
 def pregunta_02():
     """
@@ -45,17 +45,18 @@ def pregunta_02():
 
     """
     letras = []
-    Res2 = []
+    R2 = []
 
     with open('data.csv') as datos:
         datos = csv.reader(datos, delimiter='	')
         for i in datos:
             letras.append(i[0])         
     for j in set(letras):
-        Res2.append((j, letras.count(j)))
-    Res2.sort()
+        R2.append((j, letras.count(j)))
+    R2.sort()
 
-    return Res2
+    return R2
+
 
 def pregunta_03():
     """
@@ -70,23 +71,24 @@ def pregunta_03():
         ("D", 31),
         ("E", 67),
     ]
-
+    
     """
-    letra=[]
-    suma = []
-    Res3=[]
+    letras=[]
+    conteo = []
+    R3=[]
     with open('data.csv') as datos:
         datos = csv.reader(datos, delimiter='	')
         for i in datos:
-            if(not i[0] in letra):
-                letra.append(i[0])
-                suma.append(int(i[1]))
+            if(not i[0] in letras):
+                letras.append(i[0])
+                conteo.append(int(i[1]))
             else:
-                suma[letra.index(i[0])]+=int(i[1])
-    for J in letra:
-        R3.append((J,conteo[letra.index(J)]))
-    Res3.sort(reverse=False)
-    return
+                conteo[letras.index(i[0])]+=int(i[1])
+    for J in letras:
+        R3.append((J,conteo[letras.index(J)]))
+    R3.sort(reverse=False)
+    return R3
+
 
 def pregunta_04():
     """
@@ -110,18 +112,19 @@ def pregunta_04():
     ]
 
     """
-    
-    Meses = []
+    meses = []
     with open('data.csv') as datos:
         datos = csv.reader(datos, delimiter='	')
         for i in datos:
-            Mes = i[2].split("-")[1]
-            Meses.append(mes)
-    Res4 = []
-    for Mes in sorted(set(Meses)):
-        Res4.append((Mes, Meses.count(Mes)))
-    return Res4
-  
+            mes = i[2].split("-")[1]
+            meses.append(mes)
+
+    R4 = []
+    for mes in sorted(set(meses)):
+        R4.append((mes, meses.count(mes)))
+    return R4
+
+
 def pregunta_05():
     """
     Retorne una lista de tuplas con el valor maximo y minimo de la columna 2 por cada
@@ -137,22 +140,24 @@ def pregunta_05():
     ]
 
     """
-    Letra = []
-    Conteo = []
+    letras = []
+    conteo = []
 
     with open('data.csv') as csv_file:
         datos = csv.reader(csv_file, delimiter='	')
         for i in datos:
             if not i[0] in letras:
-                Letra.append(i[0])
-                Conteo.append([int(i[1])])
+                letras.append(i[0])
+                conteo.append([int(i[1])])
             else:
-                Conteo[Letra.index(i[0])].append(int(i[1]))
-    Res5 = []
-    for l in sorted(set(Letra)):
-        Res5.append((l, max(Conteo[Letra.index(l)]), min(Conteo[Letras.index(l)])))  
-    return Res5
-    
+                conteo[letras.index(i[0])].append(int(i[1]))
+    R5 = []
+
+    for l in sorted(set(letras)):
+        R5.append((l, max(conteo[letras.index(l)]), min(conteo[letras.index(l)])))  
+    return R5
+
+
 def pregunta_06():
     """
     La columna 5 codifica un diccionario donde cada cadena de tres letras corresponde a
@@ -196,7 +201,8 @@ def pregunta_06():
         R6.append((cadena, min(valores[cadenas.index(cadena)]), max(valores[cadenas.index(cadena)])))
 
     return R6
-    
+
+
 def pregunta_07():
     """
     Retorne una lista de tuplas que asocien las columnas 0 y 1. Cada tupla contiene un
@@ -232,7 +238,8 @@ def pregunta_07():
     for numero in sorted(numeros):
         R7.append((numero, letras[numeros.index(numero)]))
     return R7
-   
+
+
 def pregunta_08():
     """
     Genere una lista de tuplas, donde el primer elemento de cada tupla contiene  el valor
@@ -271,7 +278,8 @@ def pregunta_08():
     R8.sort()
     
     return R8
-    
+
+
 def pregunta_09():
     """
     Retorne un diccionario que contenga la cantidad de registros en que aparece cada
@@ -309,7 +317,8 @@ def pregunta_09():
     R9 = dict(sorted(dic.items()))
     
     return R9
-    
+
+
 def pregunta_10():
     """
     Retorne una lista de tuplas contengan por cada tupla, la letra de la columna 1 y la
@@ -328,7 +337,7 @@ def pregunta_10():
 
 
     """
-     R10 = []
+    R10 = []
 
     with open('data.csv') as datos:
         datos = csv.reader(datos, delimiter='	')
@@ -338,6 +347,7 @@ def pregunta_10():
             R10.append((fila[0], col4, col5))
         
     return R10
+
 
 def pregunta_11():
     """
@@ -369,7 +379,9 @@ def pregunta_11():
                     letras[letra] += int(fila[1])
 
     R11 = dict(sorted(letras.items()))
+    
     return R11
+
 
 def pregunta_12():
     """
@@ -401,4 +413,5 @@ def pregunta_12():
                     letras[letra] += numero
 
     R12 = dict(sorted(letras.items()))
+
     return R12
