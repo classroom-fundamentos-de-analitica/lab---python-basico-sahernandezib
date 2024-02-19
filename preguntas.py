@@ -12,6 +12,7 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 """
 
+import csv
 
 def pregunta_01():
     """
@@ -21,8 +22,12 @@ def pregunta_01():
     214
 
     """
-    return
-
+    R1 = 0
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for fila in datos:
+            R1 += int(fila[1])
+    return R1
 
 def pregunta_02():
     """
@@ -39,7 +44,18 @@ def pregunta_02():
     ]
 
     """
-    return
+    letras = []
+    R2 = []
+
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for i in datos:
+            letras.append(i[0])         
+    for j in set(letras):
+        R2.append((j, letras.count(j)))
+    R2.sort()
+
+    return R2
 
 
 def pregunta_03():
@@ -55,9 +71,23 @@ def pregunta_03():
         ("D", 31),
         ("E", 67),
     ]
-
+    
     """
-    return
+    letras=[]
+    conteo = []
+    R3=[]
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for i in datos:
+            if(not i[0] in letras):
+                letras.append(i[0])
+                conteo.append(int(i[1]))
+            else:
+                conteo[letras.index(i[0])]+=int(i[1])
+    for J in letras:
+        R3.append((J,conteo[letras.index(J)]))
+    R3.sort(reverse=False)
+    return R3
 
 
 def pregunta_04():
@@ -82,7 +112,17 @@ def pregunta_04():
     ]
 
     """
-    return
+    meses = []
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for i in datos:
+            mes = i[2].split("-")[1]
+            meses.append(mes)
+
+    R4 = []
+    for mes in sorted(set(meses)):
+        R4.append((mes, meses.count(mes)))
+    return R4
 
 
 def pregunta_05():
@@ -100,7 +140,22 @@ def pregunta_05():
     ]
 
     """
-    return
+    letras = []
+    conteo = []
+
+    with open('data.csv') as csv_file:
+        datos = csv.reader(csv_file, delimiter='	')
+        for i in datos:
+            if not i[0] in letras:
+                letras.append(i[0])
+                conteo.append([int(i[1])])
+            else:
+                conteo[letras.index(i[0])].append(int(i[1]))
+    R5 = []
+
+    for l in sorted(set(letras)):
+        R5.append((l, max(conteo[letras.index(l)]), min(conteo[letras.index(l)])))  
+    return R5
 
 
 def pregunta_06():
@@ -125,7 +180,27 @@ def pregunta_06():
     ]
 
     """
-    return
+    cadenas = []
+    valores = []
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for i in datos:
+            dic = i[4].split(',')
+
+            for j in dic: 
+                cadena = j.split(':')[0]
+                valor = j.split(':')[1]
+
+                if cadena not in cadenas:
+                    cadenas.append(cadena)
+                    valores.append([int(valor)])
+                else:
+                    valores[cadenas.index(cadena)].append(int(valor))
+    R6 = []
+    for cadena in sorted(cadenas):
+        R6.append((cadena, min(valores[cadenas.index(cadena)]), max(valores[cadenas.index(cadena)])))
+
+    return R6
 
 
 def pregunta_07():
@@ -149,7 +224,20 @@ def pregunta_07():
     ]
 
     """
-    return
+    numeros = []
+    letras = []
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for fila in datos:
+            if int(fila[1]) not in numeros:
+                numeros.append(int(fila[1]))
+                letras.append([fila[0]])
+            else:
+                letras[numeros.index(int(fila[1]))].append(fila[0])
+    R7 = []
+    for numero in sorted(numeros):
+        R7.append((numero, letras[numeros.index(numero)]))
+    return R7
 
 
 def pregunta_08():
@@ -174,7 +262,22 @@ def pregunta_08():
     ]
 
     """
-    return
+    numeros = []
+    letras = []
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for fila in datos:
+            if int(fila[1]) not in numeros:
+                numeros.append(int(fila[1]))
+                letras.append({fila[0]})
+            else:
+                letras[numeros.index(int(fila[1]))].add(fila[0])
+    R8 = []
+    for numero in sorted(numeros):
+        R8.append((numero, list(sorted(letras[numeros.index(numero)]))))
+    R8.sort()
+    
+    return R8
 
 
 def pregunta_09():
@@ -197,7 +300,23 @@ def pregunta_09():
     }
 
     """
-    return
+    dic = {}
+
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for fila in datos:
+            diccionario = fila[4].split(',')
+            for i in diccionario: 
+                cadena = i.split(':')[0]
+
+                if cadena not in dic.keys():
+                    dic[cadena] = 1
+                else:
+                    dic[cadena] += 1
+
+    R9 = dict(sorted(dic.items()))
+    
+    return R9
 
 
 def pregunta_10():
@@ -218,7 +337,16 @@ def pregunta_10():
 
 
     """
-    return
+    R10 = []
+
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for fila in datos:
+            col4 = len(fila[3].split(','))
+            col5 = len(fila[4].split(','))
+            R10.append((fila[0], col4, col5))
+        
+    return R10
 
 
 def pregunta_11():
@@ -239,7 +367,20 @@ def pregunta_11():
 
 
     """
-    return
+    letras = {}
+
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for fila in datos:
+            for letra in fila[3].split(','):
+                if not letra in letras.keys():
+                    letras[letra] = int(fila[1])
+                else:
+                    letras[letra] += int(fila[1])
+
+    R11 = dict(sorted(letras.items()))
+    
+    return R11
 
 
 def pregunta_12():
@@ -257,4 +398,20 @@ def pregunta_12():
     }
 
     """
-    return
+    letras = {}
+    with open('data.csv') as datos:
+        datos = csv.reader(datos, delimiter='	')
+        for fila in datos:
+            letra = fila[0]
+                
+            for elemento in fila[4].split(','):
+                numero = int(elemento.split(':')[1])
+
+                if not letra in letras.keys():
+                    letras[letra] = numero
+                else:
+                    letras[letra] += numero
+
+    R12 = dict(sorted(letras.items()))
+
+    return R12
